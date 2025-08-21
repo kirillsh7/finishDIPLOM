@@ -11,7 +11,7 @@ app.use(express.static('../frontend/dist'))
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-	origin: true,
+	origin: 'http://shlogov.kiriill.result-student.tw1.ru',
 	credentials: true
 }))
 app.use('/', routes)
