@@ -6,7 +6,7 @@ COPY . .
 
 WORKDIR /usr/src/app/frontend
 
-RUN npm install
+RUN npm install --include=dev
 RUN npm run build
 
 WORKDIR /usr/src/app/backend
