@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const category = require('../constants/category')
 
 const CategorySchema = new mongoose.Schema(
 	{

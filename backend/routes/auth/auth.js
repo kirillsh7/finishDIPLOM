@@ -14,7 +14,7 @@ router.get('/auth/check', async (req, res) => {
 		res.json({ error: null, data: { id: decoded.id, login: decoded.email, created_date: decoded.created_date } })
 
 	} catch (err) {
-		res.status(401).json({ error: 'Not authenticated', data: null })
+		res.json({ error: 'Not authenticated', data: null })
 	}
 })
 router.post('/register', async (req, res) => {

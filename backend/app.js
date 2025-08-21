@@ -6,15 +6,14 @@ const routes = require('./routes/routes')
 const cors = require('cors')
 const port = 3001
 const app = express()
-// app.use(express.static('../frontend/build'))
-app.use(cors({
-	origin: 'http://localhost:5173',
-	credentials: true,
-	allowedHeaders: ['Content-Type', 'Authorization']
-}))
+app.use(express.static('../frontend/dist'))
+
 app.use(express.json())
 app.use(cookieParser())
-
+app.use(cors({
+	origin: true,
+	credentials: true
+}))
 app.use('/', routes)
 
 mongoose

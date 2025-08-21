@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
-import { registerUser } from '@store'
+import { registerUser, errorSelector } from '@store'
 import { useChangeInput } from '@hooks'
 import { createErrorMessage } from '@utils'
 import styled from './register.module.css'
@@ -37,15 +37,12 @@ export const Register = () => {
 	const [regData, setRegData] = useState(initialRegData)
 	const changeInput = useChangeInput(setRegData)
 	const [error, setError] = useState({})
-	const [errorServer, setErrorServer] = useState('')
+	const errorAuth = useSelector(errorSelector)
 	const isValid = Object.keys(error).length === 0
 	const [isLoading, setIsLoading] = useState(false)
-	const errorMessage = errorServer || Object.values(error)[0]
+	const errorMessage = errorAuth || Object.values(error)[0]
 
-	const resetError = () => {
-		setError({})
-		setErrorServer('')
-	}
+
 
 	const handleSubmit = async e => {
 		e.preventDefault()
@@ -56,7 +53,6 @@ export const Register = () => {
 			navigate('/')
 			setIsLoading(false)
 		} catch (err) {
-			if (!err.inner) setErrorServer(err.message)
 			setError(createErrorMessage(err))
 			setIsLoading(false)
 		}
@@ -64,7 +60,7 @@ export const Register = () => {
 
 	const handleChange = e => {
 		changeInput(e)
-		resetError()
+		setError({})
 	}
 
 	return (

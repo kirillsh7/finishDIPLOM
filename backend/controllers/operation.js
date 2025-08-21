@@ -2,9 +2,7 @@ const Operation = require('../models/Operation')
 const Category = require('../models/Category')
 const ClientAccount = require('../models/ClientAccount')
 const calculateAmount = require('../helpers/calculateAmount')
-// const hasOperationChanged = require('../helpers/hasOperationChanged')
-// const changerAccount = require('../helpers/changer/changerAccount')
-// const changerAmount = require('../helpers/changer/changerAmount')
+
 const changeOperation = require('../helpers/changer/changeOperation')
 async function addOperation(operation) {
 	const category = await Category.findById(operation.category)

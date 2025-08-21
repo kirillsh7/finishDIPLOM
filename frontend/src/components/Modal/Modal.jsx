@@ -1,4 +1,4 @@
-import styled from './Modal.module.css'
+import styled from './modal.module.css'
 export const Modal = ({ isOpen, onClose, children }) => {
 	if (!isOpen) return null
 	const onCloseOverlay = e => {

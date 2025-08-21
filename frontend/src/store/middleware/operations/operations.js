@@ -6,7 +6,7 @@ export const getOperations = createAsyncThunk(
 		try {
 			return await apiOperations.get(user)
 		} catch (e) {
-			return rejectWithValue(e.message)
+			return rejectWithValue(e)
 		}
 	}
 )
@@ -18,7 +18,7 @@ export const deleteOperations = createAsyncThunk(
 			return await apiOperations.delete(id)
 
 		} catch (e) {
-			return rejectWithValue(e.message)
+			return rejectWithValue(e)
 		}
 	}
 )
@@ -30,7 +30,7 @@ export const createOperations = createAsyncThunk(
 			return await apiOperations.create(data)
 
 		} catch (e) {
-			return rejectWithValue(e.message)
+			return rejectWithValue(e)
 		}
 	}
 )
@@ -39,11 +39,9 @@ export const updateOperations = createAsyncThunk(
 	'operations/updateOperations',
 	async ({ id, data }, { rejectWithValue }) => {
 		try {
-			const res = await apiOperations.update(id, data)
-			console.log(res)
-			return res
+			return await apiOperations.update(id, data)
 		} catch (e) {
-			return rejectWithValue(e.message)
+			return rejectWithValue(e)
 		}
 	}
 )

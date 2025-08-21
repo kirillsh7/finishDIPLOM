@@ -4,10 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "db": "json-server -w src/db.json --port=3005",
-    "preview": "vite preview"
+    "start": "vite",
+    "build": "vite build"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",

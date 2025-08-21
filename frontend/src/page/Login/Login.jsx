@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
-import { authUser } from '@store'
+import { authUser, errorSelector, loadingSelector } from '@store'
 import { useChangeInput } from '@hooks'
 import styled from './login.module.css'
 import { createErrorMessage } from '@utils'
@@ -27,36 +27,27 @@ export const Login = () => {
 	const [authData, setAuthData] = useState({ login: '', password: '' })
 	const [error, setError] = useState({})
 	const changeInput = useChangeInput(setAuthData)
-	const [errorServer, setErrorServer] = useState('')
-	const errorMessage = Object.values(error)[0] || errorServer
+	const errorAuth = useSelector(errorSelector)
+	const errorMessage = Object.values(error)[0] || errorAuth
 	const isValid = Object.keys(error).length === 0
-	const [isLoading, setIsLoading] = useState(false)
+	const loading = useSelector(loadingSelector)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
 	const resetError = () => {
 		setError({})
-		setErrorServer('')
 	}
 
 	const handleSubmit = async e => {
 		e.preventDefault()
-		setIsLoading(true)
 
 		try {
 			const data = await authSchema.validate(authData, { abortEarly: false })
 			dispatch(authUser(data))
 			navigate('/')
-			setIsLoading(false)
 
 		} catch (err) {
-			if (!err.inner) {
-				setErrorServer(err.message)
-				setIsLoading(false)
-				return
-			}
 			setError(createErrorMessage(err))
-			setIsLoading(false)
 		}
 	}
 
@@ -86,8 +77,8 @@ export const Login = () => {
 					/>
 				</div>
 				{errorMessage && <p className={styled.error}>{errorMessage}</p>}
-				<button type='submit' disabled={!isValid || isLoading}>
-					{isLoading ? 'Загрузка...' : 'Войти'}
+				<button type='submit' disabled={!isValid || loading}>
+					{loading ? 'Загрузка...' : 'Войти'}
 				</button>
 				<p>
 					<Link to={'/register'}>Зарегистрироваться</Link>
