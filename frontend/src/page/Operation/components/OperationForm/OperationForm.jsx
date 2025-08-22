@@ -11,8 +11,8 @@ export const OperationForm = ({ closeOperationForm }) => {
 	const category = useSelector(categoryItemsSelector)
 	const clientAccount = useSelector(clientAccountItemsSelector)
 	const [newOperation, setNewOperation] = useState({
-		category: category[0].id,
-		client_account: clientAccount[0].id,
+		category: category[0]?.id,
+		client_account: clientAccount[0]?.id,
 		name: '',
 		amount: '',
 		comment: '',

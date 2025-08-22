@@ -6,16 +6,19 @@ const routes = require('./routes/routes')
 const cors = require('cors')
 const port = 3001
 const app = express()
+const path = require('path')
 app.use(express.static('../frontend/dist'))
 
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-	origin: 'http://shlogov.kiriill.result-student.tw1.ru',
+	origin: process.env.CORS_ORIGINS,
 	credentials: true
 }))
-app.use('/', routes)
-
+app.use('/api', routes)
+app.get('/*', (req, res) => {
+	res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
+})
 mongoose
 	.connect(process.env.DB_CONNECTION_STRING)
 	.then(() => {

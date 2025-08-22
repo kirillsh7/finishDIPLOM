@@ -1,6 +1,5 @@
-import { BASE_URL } from '../constants'
 import axios from 'axios'
-const URL = `${BASE_URL}`
+const URL = import.meta.env.VITE_BASE_URL
 const config = {
 	baseURL: URL,
 	headers: {
