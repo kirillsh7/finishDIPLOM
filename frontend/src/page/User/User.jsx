@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
-import { ToggleInput } from '@components'
+import { ToggleInput, Button } from '@components'
 import { createErrorMessage } from '@utils'
 import { useChangeInput } from '@hooks'
 import { userSelector, updateUser, loadingSelector, userCreatedDateSelector, userLoginSelector, errorSelector } from '@store'
@@ -71,10 +71,8 @@ export const User = () => {
 		try {
 			setErrorValidate({})
 			const validation = await changeSchema.validate(userInfo, { abortEarly: false })
-			dispatch(updateUser({ id: userId, data: validation }))
-			delete validation.password
-			delete validation.newPassword
-			// setUserInfo(validation)
+			await dispatch(updateUser({ id: userId, data: validation })).unwrap()
+			setUserInfo({ login: validation?.login })
 			setIsEdit(false)
 		} catch (e) {
 			setErrorValidate(createErrorMessage(e))
@@ -94,12 +92,12 @@ export const User = () => {
 			<div className={styled.buttons}>
 				<h1>Профиль пользователя</h1>
 				{!isEdit
-					? <button id="edit-btn" className={styled.button} onClick={() => setIsEdit(!isEdit)}>
+					? <Button id="edit-btn" className={styled.button} onClick={() => setIsEdit(!isEdit)}>
 						Изменить данные
-					</button>
+					</Button>
 					: (<>
-						<button id="button" className={styled.button} onClick={submitEditUser}>Сохранить</button>
-						<button id="button" onClick={handleClose}>&times;</button>
+						<Button id="button" className={styled.button} onClick={submitEditUser}>Сохранить</Button>
+						<Button id="button" onClick={handleClose}>&times;</Button>
 					</>)
 				}
 

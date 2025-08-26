@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logoutAuth, userLoginSelector } from '@store'
+import { Button } from '@components'
 import styled from '../../header.module.css'
 export const MenuLogout = () => {
 	const dispatch = useDispatch()
@@ -14,12 +15,12 @@ export const MenuLogout = () => {
 						<p className='hover:text-blue-900 hover:underline'>{userLogin}</p>
 					</Link>
 
-					<button
+					<Button
 						className={styled.button}
 						onClick={() => dispatch(logoutAuth())}
 					>
 						Выход
-					</button>
+					</Button>
 				</div>
 			)}
 		</div>

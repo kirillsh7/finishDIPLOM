@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { operationsItemsSelector, operationsLoadingSelector, operationsErrorSelector, deleteOperations, updateOperations } from '@store'
-import { Modal, Table } from '@components'
+import { Modal, Table, Button } from '@components'
 import { OperationForm } from './components'
 import styled from './operation.module.css'
 
@@ -23,14 +23,14 @@ export const Operation = () => {
 		<div className={styled.operationPage}>
 			<div className={styled.operationHeader}>
 				<h1 className={styled.operationTitle}>Операции</h1>
-				<button
+				<Button
 					className={styled.operationCreateButton}
 					onClick={() => {
 						setShowOperationForm(true)
 					}}
 				>
 					Создать операцию
-				</button>
+				</Button>
 			</div>
 
 			<div className={styled.operationList}>

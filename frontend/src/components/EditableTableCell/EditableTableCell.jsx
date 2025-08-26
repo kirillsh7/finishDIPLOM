@@ -1,3 +1,5 @@
+import { Input } from '../Input/Input'
+
 export const EditableTableCell = ({
 	isEdit,
 	name,
@@ -40,7 +42,7 @@ export const EditableTableCell = ({
 							))}
 						</select>
 					) : (
-						<input
+						<Input
 							name={name}
 							value={currentValueName}
 							onChange={onChange}

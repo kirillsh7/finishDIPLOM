@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Modal, Table } from '@components'
+import { Modal, Table, Button } from '@components'
 import { clientAccountItemsSelector, clientAccountLoadingSelector, clientAccountErrorSelector, deleteClientAccount } from '@store'
 
 import { ClientAccountForm } from './components'
@@ -32,12 +32,12 @@ export const ClientAccount = () => {
 			<div className='accounts-header'>
 				<h1 className='accounts-title'>Мои счета</h1>
 
-				<button
+				<Button
 					className='add-account-btn'
 					onClick={() => setShowAddForm(!showAddForm)}
 				>
 					Добавить счет
-				</button>
+				</Button>
 			</div>
 
 			{showAddForm && (

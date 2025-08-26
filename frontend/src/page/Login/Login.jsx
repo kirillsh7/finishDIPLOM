@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
 import { authUser, errorSelector, loadingSelector } from '@store'
+import { Input, Button } from '@components'
 import { useChangeInput } from '@hooks'
 import styled from './login.module.css'
 import { createErrorMessage } from '@utils'
@@ -32,7 +33,6 @@ export const Login = () => {
 	const isValid = Object.keys(error).length === 0
 	const loading = useSelector(loadingSelector)
 	const dispatch = useDispatch()
-	const navigate = useNavigate()
 
 	const resetError = () => {
 		setError({})
@@ -43,8 +43,7 @@ export const Login = () => {
 
 		try {
 			const data = await authSchema.validate(authData, { abortEarly: false })
-			dispatch(authUser(data))
-			navigate('/')
+			await dispatch(authUser(data)).unwrap()
 
 		} catch (err) {
 			setError(createErrorMessage(err))
@@ -60,7 +59,7 @@ export const Login = () => {
 			<form onSubmit={handleSubmit} className={styled.form}>
 				<h1>Авторизация</h1>
 				<div>
-					<input
+					<Input
 						placeholder='Почта'
 						name='login'
 						value={authData.login}
@@ -68,7 +67,7 @@ export const Login = () => {
 					/>
 				</div>
 				<div>
-					<input
+					<Input
 						placeholder='Пароль'
 						name='password'
 						type='password'
@@ -77,9 +76,9 @@ export const Login = () => {
 					/>
 				</div>
 				{errorMessage && <p className={styled.error}>{errorMessage}</p>}
-				<button type='submit' disabled={!isValid || loading}>
+				<Button type='submit' disabled={!isValid || loading}>
 					{loading ? 'Загрузка...' : 'Войти'}
-				</button>
+				</Button>
 				<p>
 					<Link to={'/register'}>Зарегистрироваться</Link>
 				</p>

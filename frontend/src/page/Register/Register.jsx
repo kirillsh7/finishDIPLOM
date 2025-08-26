@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
-import { registerUser, errorSelector } from '@store'
+import { registerUser, errorSelector, loadingSelector } from '@store'
 import { useChangeInput } from '@hooks'
 import { createErrorMessage } from '@utils'
+import { Input, Button } from '@components'
 import styled from './register.module.css'
 
 const registerSchema = yup.object().shape({
@@ -38,23 +39,19 @@ export const Register = () => {
 	const changeInput = useChangeInput(setRegData)
 	const [error, setError] = useState({})
 	const errorAuth = useSelector(errorSelector)
+	const isLoading = useSelector(loadingSelector)
 	const isValid = Object.keys(error).length === 0
-	const [isLoading, setIsLoading] = useState(false)
 	const errorMessage = errorAuth || Object.values(error)[0]
 
 
 
 	const handleSubmit = async e => {
 		e.preventDefault()
-		setIsLoading(true)
 		try {
 			const data = await registerSchema.validate(regData, { abortEarly: false })
-			dispatch(registerUser(data))
-			navigate('/')
-			setIsLoading(false)
+			await dispatch(registerUser(data)).unwrap()
 		} catch (err) {
 			setError(createErrorMessage(err))
-			setIsLoading(false)
 		}
 	}
 
@@ -71,7 +68,7 @@ export const Register = () => {
 				</div>
 				<h1 className={styled.title}>Регистрация</h1>
 				<div>
-					<input
+					<Input
 						placeholder='Почта'
 						name='login'
 						value={regData.login}
@@ -80,7 +77,7 @@ export const Register = () => {
 					/>
 				</div>
 				<div>
-					<input
+					<Input
 						placeholder='Пароль'
 						name='password'
 						type='password'
@@ -90,7 +87,7 @@ export const Register = () => {
 					/>
 				</div>
 				<div>
-					<input
+					<Input
 						placeholder='Подтвердите пароль'
 						name='confirmPassword'
 						type='password'
@@ -99,9 +96,9 @@ export const Register = () => {
 					/>
 				</div>
 				{errorMessage && <p className={styled.error}>{errorMessage}</p>}
-				<button type='submit' disabled={!isValid || isLoading}>
+				<Button type='submit' disabled={!isValid || isLoading}>
 					{isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
-				</button>
+				</Button>
 			</form>
 		</div>
 	)

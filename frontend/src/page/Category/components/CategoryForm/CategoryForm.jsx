@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { CATEGORY_NAME, CATEGORY } from '@constants'
 import { userSelector } from '@store'
 import styled from './category-form.module.css'
+import { Input, Button } from '@components'
 export const CategoryForm = ({ handleCreate }) => {
 	const user = useSelector(userSelector)
 	const [categoryDataForm, setCategoryDataForm] = useState({
@@ -22,7 +23,7 @@ export const CategoryForm = ({ handleCreate }) => {
 				<label htmlFor='categoryName' className={styled.label}>
 					Название категории
 				</label>
-				<input
+				<Input
 					type='text'
 					id='categoryName'
 					className={styled.input}
@@ -57,9 +58,9 @@ export const CategoryForm = ({ handleCreate }) => {
 				</select>
 			</div>
 
-			<button type='submit' className={styled.button}>
+			<Button type='submit' className={styled.button}>
 				Создать категорию
-			</button>
+			</Button>
 		</form>
 	)
 }

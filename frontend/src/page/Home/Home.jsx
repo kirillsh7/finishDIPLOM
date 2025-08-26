@@ -14,6 +14,7 @@ import {
 } from 'chart.js'
 import { clientAccountItemsSelector, operationsItemsSelector, categoryItemsSelector, clientAccountLoadingSelector, categoryLoadingSelector, errorSelector, operationsLoadingSelector } from '@store'
 import { CATEGORY } from '@constants'
+import { Button } from '@components'
 import styled from './home.module.css'
 
 ChartJS.register(
@@ -172,9 +173,9 @@ export const Home = () => {
 				<div className={styled.card}>
 					<div className={styled.sectionHeader}>
 						<h2 className={styled.sectionTitle}>Последние доходы</h2>
-						<button className={styled.viewAll}>
+						<Button className={styled.viewAll}>
 							<Link to='/operation'>Все</Link>
-						</button>
+						</Button>
 					</div>
 					<ul className={styled.list}>
 						{incomes.length !== 0 ? incomes.slice(0, 3).map(income => (
@@ -203,9 +204,9 @@ export const Home = () => {
 				<div className={styled.card}>
 					<div className={styled.sectionHeader}>
 						<h2 className={styled.sectionTitle}>Последние расходы</h2>
-						<button className={styled.viewAll}>
+						<Button className={styled.viewAll}>
 							<Link to='/operation'>Все</Link>
-						</button>
+						</Button>
 					</div>
 					<ul className={styled.list}>
 						{expenses.length !== 0 ? expenses.slice(0, 3).map(expense => (
@@ -234,9 +235,9 @@ export const Home = () => {
 				<div className={styled.card}>
 					<div className={styled.sectionHeader}>
 						<h2 className={styled.sectionTitle}>Мои счета</h2>
-						<button className={styled.viewAll}>
+						<Button className={styled.viewAll}>
 							<Link to='/client-account'>Все</Link>
-						</button>
+						</Button>
 					</div>
 					<ul className={styled.list}>
 						{accounts.length !== 0 ? accounts.slice(0, 3).map(account => (

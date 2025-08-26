@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { categoryErrorSelector, clearCategoryError } from '@store'
 import styles from './category-error.module.css'
+import { Button } from '@components'
 export const CategoryError = () => {
 	const dispatch = useDispatch()
 	const categoriesError = useSelector(categoryErrorSelector)
@@ -10,12 +11,12 @@ export const CategoryError = () => {
 			<div className={styles.errorNotification}>
 				<div className={styles.errorContent}>
 					<span>{categoriesError}</span>
-					<button
+					<Button
 						className={styles.closeButton}
 						onClick={() => dispatch(clearCategoryError())}
 					>
 						&times;
-					</button>
+					</Button>
 				</div>
 			</div>
 		)

@@ -14,6 +14,7 @@ export const createCustomAsyncReducer = (asyncThunk, options = {}) => {
 		onRejected = (state, action) => {
 			state[loadingKey] = false
 			state.error = action.payload
+			return state
 		}
 	} = options
 

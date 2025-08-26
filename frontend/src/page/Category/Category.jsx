@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { CategoryError, CategoryForm, CategoryList } from './components'
-import { Modal } from '@components'
+import { Modal, Button } from '@components'
 import {
 	deleteCategory,
 	createCategory,
@@ -15,13 +15,18 @@ export const Category = () => {
 	const categoriesLoading = useSelector(categoryLoadingSelector)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
-
 	const handleDelete = id => {
 		dispatch(deleteCategory(id))
 	}
-	const handleCreate = data => {
-		dispatch(createCategory(data))
-		setIsModalOpen(false)
+	const handleCreate = async data => {
+		try {
+			await dispatch(createCategory(data)).unwrap()
+			setIsModalOpen(false)
+
+		} catch (err) {
+			console.log(err)
+			setIsModalOpen(false)
+		}
 	}
 
 
@@ -36,13 +41,13 @@ export const Category = () => {
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<h1 className={styles.title}>Мои категории</h1>
-					<button
+					<Button
 						type='button'
 						className={styles.createCategory}
 						onClick={() => setIsModalOpen(true)}
 					>
 						Создать категорию
-					</button>
+					</Button>
 				</div>
 				<CategoryError />
 				{categories.length === 0 ? (

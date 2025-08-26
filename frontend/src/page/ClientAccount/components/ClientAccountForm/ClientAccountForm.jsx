@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createClientAccount, userSelector } from '@store'
 import { useChangeInput } from '@hooks'
+import { Input, Button } from '@components'
 export const ClientAccountForm = ({ onClose }) => {
 	const user = useSelector(userSelector)
 	const dispatch = useDispatch()
@@ -12,21 +13,26 @@ export const ClientAccountForm = ({ onClose }) => {
 		created_date: Date.now(),
 		user: user,
 	}
+	const [error, setError] = useState('')
 	const [newAccount, setNewAccount] = useState(initialAccaunt)
 	const handleInputChange = useChangeInput(setNewAccount)
 
-	const handleSubmit = e => {
-		e.preventDefault()
-		dispatch(createClientAccount(newAccount))
-		setNewAccount(initialAccaunt)
-		onClose()
+	const handleSubmit = async e => {
+		try {
+			e.preventDefault()
+			await dispatch(createClientAccount(newAccount)).unwrap()
+			setNewAccount(initialAccaunt)
+			onClose()
+		} catch (err) {
+			setError("Проблемы при создании счета: " + err)
+		}
 	}
 
 	return (
 		<form className='add-account-form' onSubmit={handleSubmit}>
 			<div className='form-group'>
 				<label>Название счета:</label>
-				<input
+				<Input
 					type='text'
 					name='name'
 					value={newAccount.name}
@@ -36,7 +42,7 @@ export const ClientAccountForm = ({ onClose }) => {
 			</div>
 			<div className='form-group'>
 				<label>Тип счета:</label>
-				<input
+				<Input
 					type='text'
 					name='type'
 					value={newAccount.type}
@@ -46,7 +52,7 @@ export const ClientAccountForm = ({ onClose }) => {
 			</div>
 			<div className='form-group'>
 				<label>Сумма:</label>
-				<input
+				<Input
 					type='number'
 					name='amount'
 					value={newAccount.amount}
@@ -54,9 +60,10 @@ export const ClientAccountForm = ({ onClose }) => {
 					required
 				/>
 			</div>
-			<button type='submit' className='submit'>
+			{error && <p style={{ color: 'red' }}>{error}</p>}
+			<Button type='submit' className='submit'>
 				Добавить
-			</button>
+			</Button>
 		</form>
 	)
 }

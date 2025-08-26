@@ -1,4 +1,5 @@
 import styled from './modal.module.css'
+import { Button } from '@components'
 export const Modal = ({ isOpen, onClose, children }) => {
 	if (!isOpen) return null
 	const onCloseOverlay = e => {
@@ -8,9 +9,9 @@ export const Modal = ({ isOpen, onClose, children }) => {
 	return (
 		<div className={styled.modalOverlay} onClick={onCloseOverlay}>
 			<div className={styled.modal}>
-				<button className={styled.modalClose} onClick={onClose}>
+				<Button className={styled.modalClose} onClick={onClose}>
 					&times;
-				</button>
+				</Button>
 				<div className={styled.modalContent}>{children}</div>
 			</div>
 		</div>

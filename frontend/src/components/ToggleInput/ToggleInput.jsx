@@ -1,5 +1,6 @@
+import { Input } from '@components'
 export const ToggleInput = ({ isEdit, onChange, ...props }) => {
 	return isEdit
-		? <input onChange={onChange} value={props.value} {...props} />
+		? <Input onChange={onChange} value={props.value} {...props} />
 		: <p >{props?.type === 'password' ? '******' : props?.value}</p>
 }

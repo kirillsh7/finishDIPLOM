@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useChangeInput } from '@hooks'
 import styled from '../../operation.module.css'
+import { Input, Button } from '@components'
 import { useDispatch, useSelector } from 'react-redux'
 import { userSelector, categoryItemsSelector, clientAccountItemsSelector, createOperations } from '@store'
 
@@ -22,9 +23,14 @@ export const OperationForm = ({ closeOperationForm }) => {
 	const handleInput = useChangeInput(setNewOperation)
 
 	const handleSubmit = async e => {
-		e.preventDefault()
-		dispatch(createOperations(newOperation))
-		closeOperationForm()
+		try {
+			e.preventDefault()
+			await dispatch(createOperations(newOperation)).unwrap()
+			closeOperationForm()
+		}
+		catch (err) {
+			console.log(err)
+		}
 	}
 
 	return (
@@ -35,14 +41,14 @@ export const OperationForm = ({ closeOperationForm }) => {
 					Новая операция
 				</h2>
 				<form onSubmit={e => handleSubmit(e)}>
-					<input
+					<Input
 						placeholder='Назкание операции'
 						name='name'
 						value={newOperation.name}
 						onChange={handleInput}
 						required
 					/>
-					<input
+					<Input
 						type='number'
 						placeholder='Сумма'
 						name='amount'
@@ -104,7 +110,7 @@ export const OperationForm = ({ closeOperationForm }) => {
 						onChange={handleInput}
 
 					/>
-					<button type='submit'>Создать операцию</button>
+					<Button type='submit'>Создать операцию</Button>
 				</form>
 			</div>
 		</div>
