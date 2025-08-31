@@ -41,7 +41,7 @@ export const Register = () => {
 	const errorAuth = useSelector(errorSelector)
 	const isLoading = useSelector(loadingSelector)
 	const isValid = Object.keys(error).length === 0
-	const errorMessage = errorAuth || Object.values(error)[0]
+	const errorMessage = Object.values(error)[0] || errorAuth
 
 
 
