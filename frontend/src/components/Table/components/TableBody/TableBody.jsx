@@ -25,7 +25,9 @@ export const TableBody = ({ data, ...props }) => {
 	const editControlClose = () => {
 		setIsEdit({})
 	}
+
 	const operationsMap = data?.map(item => {
+
 		const dateFormat = Number(item.created_date)
 			? (formatLocalizedDate(Number(item.created_date)))
 			: (item.created_date)
@@ -35,8 +37,8 @@ export const TableBody = ({ data, ...props }) => {
 
 			return {
 				...item,
-				client_account: clientAccount.find(acc => acc.id === item.client_account).name,
-				category: category.find(cat => cat.id === item.category).name,
+				client_account: clientAccount.find(acc => acc.id === item.client_account)?.name || 'счет отсутствует',
+				category: category.find(cat => cat.id === item.category)?.name || 'категория отсутствует',
 				created_date: dateFormat,
 			}
 		}

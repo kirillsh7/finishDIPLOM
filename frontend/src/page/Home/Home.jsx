@@ -65,7 +65,7 @@ export const Home = () => {
 			const operationType = operation.map(el => {
 				return {
 					...el,
-					category: category.find(cat => cat.id === el.category).type
+					category: category.find(cat => cat.id === el.category)?.type
 				}
 			})
 			const mockExpenses = operationType
