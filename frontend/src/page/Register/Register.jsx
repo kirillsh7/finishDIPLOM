@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
-import { registerUser, errorSelector, loadingSelector } from '@store'
+import { registerUser, errorSelector, loadingSelector, clearAuthError } from '@store'
 import { useChangeInput } from '@hooks'
 import { createErrorMessage } from '@utils'
 import { Input, Button } from '@components'
@@ -58,6 +58,7 @@ export const Register = () => {
 	const handleChange = e => {
 		changeInput(e)
 		setError({})
+		dispatch(clearAuthError())
 	}
 
 	return (

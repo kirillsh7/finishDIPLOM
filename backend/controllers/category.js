@@ -1,10 +1,12 @@
 const Category = require('../models/Category')
+const Operation = require('../models/Operation')
 async function addCategory(category) {
 	const newCategory = await Category.create(category)
 	return newCategory
 }
 
-function deleteCategory(id) {
+async function deleteCategory(id) {
+	await Operation.deleteMany({ category: id })
 	return Category.deleteOne({ _id: id })
 }
 

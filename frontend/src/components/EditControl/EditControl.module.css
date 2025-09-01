@@ -1,0 +1,9 @@
+.container {
+	display: flex;
+	gap: 10px;
+}
+
+.editControls {
+	display: flex;
+	gap: 5px;
+}

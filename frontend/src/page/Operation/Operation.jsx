@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { operationsItemsSelector, operationsLoadingSelector, operationsErrorSelector, deleteOperations, updateOperations } from '@store'
+import { useDispatch, useSelector } from 'react-redux'
+import { operationsItemsSelector, operationsLoadingSelector, operationsErrorSelector, deleteOperations, updateOperations, clearOperationsError } from '@store'
 import { Modal, Table, Button } from '@components'
 import { OperationForm } from './components'
 import styled from './operation.module.css'
@@ -11,6 +11,7 @@ export const Operation = () => {
 	const loading = useSelector(operationsLoadingSelector)
 	const errorServer = useSelector(operationsErrorSelector)
 	const closeOperationForm = () => setShowOperationForm(false)
+	const dispatch = useDispatch()
 
 	const heading = [
 		{ name: 'Сумма', key: 'amount' },
@@ -34,7 +35,10 @@ export const Operation = () => {
 			</div>
 
 			<div className={styled.operationList}>
-				{errorServer ? <h1>{errorServer}</h1> : <Table
+				{errorServer ? <>
+					<h1>{errorServer}</h1>
+					<p className={styled.closeButton} onClick={() => dispatch(clearOperationsError())}>&times;</p>
+				</> : <Table
 					items={operations}
 					heading={heading}
 					update={updateOperations}

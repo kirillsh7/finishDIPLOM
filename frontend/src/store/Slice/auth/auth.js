@@ -11,6 +11,13 @@ const authSlice = createSlice({
 		loading: true,
 		error: null,
 	},
+	reducers: {
+		clearAuthError(state) {
+			if (state.error !== null) {
+				state.error = null
+			}
+		}
+	},
 	extraReducers: (builder) => {
 		createCustomAsyncReducer(initializeAuth, {
 			onFulfilled(state, action) {
@@ -62,7 +69,7 @@ const authSlice = createSlice({
 
 })
 
-
+export const { clearAuthError } = authSlice.actions
 export default authSlice.reducer
 
 

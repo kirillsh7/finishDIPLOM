@@ -82,3 +82,12 @@
 	outline: none;
 	box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.3);
 }
+.closeButton {
+cursor: pointer;
+}
+.selectContainer {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 15px;
+	flex-direction: column;
+}

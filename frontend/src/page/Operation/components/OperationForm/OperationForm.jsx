@@ -57,12 +57,7 @@ export const OperationForm = ({ closeOperationForm }) => {
 						required
 					/>
 					<div
-						style={{
-							display: 'flex',
-							gap: '10px',
-							marginBottom: '15px',
-							flexDirection: 'column',
-						}}
+						className={styled.selectContainer}
 					>
 						{category.length > 0 ? (
 							<select

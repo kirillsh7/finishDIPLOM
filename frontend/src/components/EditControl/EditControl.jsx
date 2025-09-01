@@ -2,6 +2,8 @@ import { MdDelete } from 'react-icons/md'
 import { MdEdit } from 'react-icons/md'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { AiOutlineCheckCircle } from 'react-icons/ai'
+import styles from './EditControl.module.css'
+
 export const EditControl = ({
 	controls,
 	isEdit,
@@ -12,10 +14,10 @@ export const EditControl = ({
 	saveEdited,
 }) => {
 	return (
-		<div style={{ display: 'flex', gap: '10px' }}>
+		<div className={styles.container}>
 			{controls === 'edit' ? (
 				isEdit === id ? (
-					<div style={{ display: 'flex', gap: '5px' }}>
+					<div className={styles.editControls}>
 						<AiOutlineCheckCircle size={20} onClick={saveEdited} />
 						<AiOutlineCloseCircle size={20} onClick={editControlClose} />
 					</div>

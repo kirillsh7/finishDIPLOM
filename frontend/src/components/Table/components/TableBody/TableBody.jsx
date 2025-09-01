@@ -37,8 +37,8 @@ export const TableBody = ({ data, ...props }) => {
 
 			return {
 				...item,
-				client_account: clientAccount.find(acc => acc.id === item.client_account)?.name || 'счет отсутствует',
-				category: category.find(cat => cat.id === item.category)?.name || 'категория отсутствует',
+				client_account: clientAccount.find(acc => acc.id === item.client_account)?.name,
+				category: category.find(cat => cat.id === item.category)?.name,
 				created_date: dateFormat,
 			}
 		}
@@ -66,7 +66,7 @@ export const TableBody = ({ data, ...props }) => {
 
 			{data && operationsMap.map((el, rowIndex) => {
 				return (
-					<tr key={el.id} style={{ borderBottom: '1px solid #eee' }}>
+					<tr key={el.id} >
 						{heading.map(({ key, controls }, colIndex) => {
 							const uniqueKey = `${el.id || 'temp'}-${key}-${rowIndex}-${colIndex}`
 							return (

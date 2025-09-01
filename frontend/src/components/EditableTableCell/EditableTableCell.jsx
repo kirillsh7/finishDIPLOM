@@ -1,4 +1,5 @@
 import { Input } from '../Input/Input'
+import styles from './EditableCell.module.css'
 
 export const EditableTableCell = ({
 	isEdit,
@@ -13,27 +14,15 @@ export const EditableTableCell = ({
 
 	const isNumber = !isNaN(value) && isFinite(value) && value !== ''
 	return (
-		<td style={{ padding: '8px', minWidth: '100px' }}>
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: `${controls ? 'space-between' : 'flex-start'}`,
-					alignItems: 'center',
-					minHeight: '32px',
-				}}
-			>
+		<td className={styles.cell}>
+			<div className={`${styles.container} ${controls ? styles.withControls : ''}`}>
 				{isEdit ? (
 					selectData ? (
 						<select
 							name={name}
 							value={currentValueName}
 							onChange={onChange}
-							style={{
-								width: '100%',
-								padding: '4px',
-								boxSizing: 'border-box',
-								height: '32px',
-							}}
+							className={styles.select}
 						>
 							{selectData.map(item => (
 								<option key={item.id} value={item.id} >
@@ -46,20 +35,15 @@ export const EditableTableCell = ({
 							name={name}
 							value={currentValueName}
 							onChange={onChange}
-							style={{
-								width: '100%',
-								padding: '4px',
-								boxSizing: 'border-box',
-								height: '32px',
-							}}
+							className={styles.input}
 						/>
 					)
 				) : isNumber ? (
-					<div style={{ width: '100%' }}>
+					<div className={styles.valueContainer}>
 						<p>{name === 'amount' ? formatAmount(currentValueName) : currentValueName}</p>
 					</div>
 				) : (
-					<div style={{ width: '100%' }}>{currentValueName}</div>
+					<div className={styles.valueContainer}>{currentValueName}</div>
 				)}
 				{controls}
 			</div>

@@ -51,7 +51,7 @@ function App() {
 					<Route path='/register' element={<Register />} />
 				</Route>
 
-				<Route path='*' element={<p style={{ textAlign: 'center', marginTop: '50px', fontSize: '24px' }}>Старница не найдена</p>} />
+				<Route path='*' element={<p className='text-center'>Старница не найдена</p>} />
 			</Routes>
 		</BrowserRouter>
 	)

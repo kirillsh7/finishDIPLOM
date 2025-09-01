@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getOperations, deleteOperations, createOperations, updateOperations, deleteClientAccount } from '../../middleware'
+import { getOperations, deleteOperations, createOperations, updateOperations, deleteClientAccount, deleteCategory } from '../../middleware'
 import { createCustomAsyncReducer } from '../../helpers'
 const OperationsSlice = createSlice({
 	name: 'operations',
@@ -7,6 +7,12 @@ const OperationsSlice = createSlice({
 		items: [],
 		error: null,
 		loading: true,
+	}, reducers: {
+		clearOperationsError(state) {
+			if (state.error !== null) {
+				state.error = null
+			}
+		}
 	},
 	extraReducers: (builder) => {
 		createCustomAsyncReducer(getOperations, {
@@ -46,11 +52,22 @@ const OperationsSlice = createSlice({
 					state.loading = false
 					state.error = null
 				}
-			})(builder), createCustomAsyncReducer(deleteClientAccount, {
+			})(builder),
+			createCustomAsyncReducer(deleteClientAccount, {
 				onFulfilled(state, action) {
 					state.items = state.items.filter(operation => operation.client_account !== action.payload
 					)
 					state.loading = false
+					state.error = null
+				}
+			})(builder),
+			createCustomAsyncReducer(deleteCategory, {
+				onFulfilled(state, action) {
+					state.loading = false
+					console.log(action.meta.arg, state.items)
+					state.items = state.items.filter(
+						operation => operation.category !== action.meta.arg
+					)
 					state.error = null
 				}
 			})(builder)
@@ -58,5 +75,5 @@ const OperationsSlice = createSlice({
 	}
 
 })
-
+export const { clearOperationsError } = OperationsSlice.actions
 export default OperationsSlice.reducer

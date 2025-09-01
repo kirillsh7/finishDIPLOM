@@ -1,0 +1,26 @@
+.cell {
+	padding: 8px;
+	min-width: 100px;
+}
+
+.container {
+	display: flex;
+	align-items: center;
+	min-height: 32px;
+}
+
+.withControls {
+	justify-content: space-between;
+}
+
+.input,
+.select {
+	width: 100%;
+	padding: 4px;
+	box-sizing: border-box;
+	height: 32px;
+}
+
+.valueContainer {
+	width: 100%;
+}

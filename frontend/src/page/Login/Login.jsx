@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
-import { authUser, errorSelector, loadingSelector } from '@store'
+import { authUser, errorSelector, loadingSelector, clearAuthError } from '@store'
 import { Input, Button } from '@components'
 import { useChangeInput } from '@hooks'
 import styled from './login.module.css'
@@ -36,6 +36,7 @@ export const Login = () => {
 
 	const resetError = () => {
 		setError({})
+		dispatch(clearAuthError())
 	}
 
 	const handleSubmit = async e => {
