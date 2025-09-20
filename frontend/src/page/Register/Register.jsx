@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
 import { registerUser, errorSelector, loadingSelector, clearAuthError } from '@store'
+import { AiOutlineClose } from "react-icons/ai"
 import { useChangeInput } from '@hooks'
 import { createErrorMessage } from '@utils'
 import { Input, Button } from '@components'
@@ -24,6 +25,17 @@ const registerSchema = yup.object().shape({
 		.max(30, 'Длина пароля должна составлять не более 30 символов'),
 	confirmPassword: yup
 		.string()
+		.required('Подтверждение пароля обязательно')
+		.test(
+			'passwords-match',
+			'Пароли не совпадают',
+			function (value) {
+				const { password } = this.parent
+				// если confirm пуст — пропускаем тест (required уже выдаст ошибку)
+				if (!value) return true
+				return value === password
+			}
+		)
 		.oneOf([yup.ref('password'), null], 'Пароли не совпадают'),
 })
 
@@ -51,15 +63,19 @@ export const Register = () => {
 			const data = await registerSchema.validate(regData, { abortEarly: false })
 			await dispatch(registerUser(data)).unwrap()
 		} catch (err) {
+			console.log(err)
 			setError(createErrorMessage(err))
 		}
 	}
-
-	const handleChange = e => {
-		changeInput(e)
+	const clearError = () => {
 		setError({})
 		dispatch(clearAuthError())
 	}
+	const handleChange = e => {
+		changeInput(e)
+
+	}
+
 
 	return (
 		<div>
@@ -96,8 +112,13 @@ export const Register = () => {
 						onChange={handleChange}
 					/>
 				</div>
-				{errorMessage && <p className={styled.error}>{errorMessage}</p>}
-				<Button type='submit' disabled={!isValid || isLoading}>
+				{errorMessage &&
+					<div className={styled.errorContainer}>
+						<p className={styled.error}>{errorMessage}</p>
+						<AiOutlineClose size={16} onClick={() => clearError()} />
+					</div>
+				}
+				<Button type='submit' >
 					{isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
 				</Button>
 			</form>

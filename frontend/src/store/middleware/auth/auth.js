@@ -19,6 +19,7 @@ export const logoutAuth = createAsyncThunk(
 			await apiAuth.logout()
 			return null
 		} catch (err) {
+
 			return rejectWithValue(err.message)
 		}
 	}

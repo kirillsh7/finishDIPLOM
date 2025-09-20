@@ -83,3 +83,8 @@
 	font-size: 18px;
 	margin-right: 2px;
 }
+.errorContainer{
+	display: flex;
+	align-items: center;
+	justify-content: center;	
+}
